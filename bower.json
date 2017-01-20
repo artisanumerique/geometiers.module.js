@@ -1,5 +1,6 @@
 {
   "name": "geometiersmodulejs",
+  "version": "1.0.0",
   "description": "",
   "main": [
     "dist/styles/geometiers.module.min.css",
