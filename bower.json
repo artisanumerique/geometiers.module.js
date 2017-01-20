@@ -1,0 +1,30 @@
+{
+  "name": "geometiersmodulejs",
+  "description": "",
+  "main": [
+    "dist/styles/geometiers.module.min.css",
+    "dist/scripts/geometiers.module.min.js"
+  ],
+  "authors": [
+    "M.Bousquet"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-mocks": "^1.4.0",
+    "angular-route": "^1.4.0",
+    "angular-resource": "^1.5.8",
+    "animate.css": "^3.5.2",
+    "getmdl-select": "*",
+    "bootstrap": "^3.2.0",
+    "jquery-ui": "^1.12.1",
+    "leaflet.geometiers.js": "*"
+  }
+}
