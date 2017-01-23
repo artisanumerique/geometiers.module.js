@@ -44,7 +44,7 @@ angular.module('geometiersmodulejsApp')
 	        scope : {
 	    		
 	    		zoneSelect       : '=parent',
-	        	decoupage        : '@',
+	        	decoupage        : '=',
 	        	navigation		 : '=',
 	            decoupe   		 : '=',
 	            legende          : '=',
@@ -763,13 +763,13 @@ angular.module('geometiersmodulejsApp')
       controller: ["$scope", "$element", function($scope, $element) {
 
         // init statistique
-        $scope.statistique =  {
+        /*$scope.statistique =  {
                     resultat : 0,       
                     chiffres : '',      
                     filtres  : [],         
                     nom      : '',        
                     type     : '',
-        };
+        };*/
 
         // Modifie le type de statistique à afficher
         $scope.update = function(type){
