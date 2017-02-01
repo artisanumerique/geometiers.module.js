@@ -838,7 +838,7 @@ angular.module('geometiersmodulejsApp')
   .directive('resultatGeometiers', function () {
     return {
       replace: true,
-	  templateUrl:'views/geometiersmodulejs.resultat.html',
+	    templateUrl:'views/geometiersmodulejs.resultat.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
 
@@ -871,6 +871,23 @@ angular.module('geometiersmodulejsApp')
       restrict: 'A',
       link: function postLink(scope, element, attrs) {
         
+      	var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+	    var animationName = 'rubberBand';
+
+      	scope.$watch('statistique', function(){
+      		 
+      		if(angular.isDefined(scope.statistique) && scope.statistique.type == 'Commune'){
+      			element.trigger('mouseover');
+      			element.addClass('active');
+      			element.addClass('animated ' + animationName).one(animationEnd, function() {
+	            	element.removeClass('animated ' + animationName);
+	        	});
+	        }	
+	        else
+	        	element.removeClass('active');
+      	})
+
+
 		element.bind('click', function() {
 		     
 				var params = Filtre.params();
@@ -1025,7 +1042,7 @@ angular.module('geometiersmodulejsApp').run(['$templateCache', function($templat
 
 
   $templateCache.put('views/geometiersmodulejs.map.html',
-    "<div id=\"map\" statistique=\"statistique\" loading=\"loading\" zoom=\"zoom\" gps=\"gps\" parent=\"parent\" decoupage=\"decoupage\" decoupe=\"{class:'mdl-menu--bottom-left'}\" navigation=\"true\" legende=\"true\"> <div id=\"bar-jq\"> <div id=\"jq-dropdown-navigation\"></div> <div id=\"jq-dropdown-decoupe\"></div> <button id=\"btn-pins\" class=\"mdl-button mdl-js-button mdl-button--icon\" ng-class=\"{'active animated rubberBand': statistique.type == 'Commune'}\" affiche-pins> <i class=\"material-icons\">{{statistique.type == 'Commune'?\"&#xE0C8;\":\"&#xE0C7;\"}}</i> </button> <div class=\"mdl-tooltip mdl-tooltip--large mdl-tooltip--right\" for=\"btn-pins\">Afficher les établissements</div> </div> </div>"
+    "<div id=\"map\" statistique=\"statistique\" loading=\"loading\" zoom=\"zoom\" gps=\"gps\" parent=\"parent\" decoupage=\"decoupage\" decoupe=\"{class:'mdl-menu--bottom-left'}\" navigation=\"true\" legende=\"true\"> <div id=\"bar-jq\"> <div id=\"jq-dropdown-navigation\"></div> <div id=\"jq-dropdown-decoupe\"></div> <button id=\"btn-pins\" class=\"mdl-button mdl-js-button mdl-button--icon\" affiche-pins> <i class=\"material-icons\">{{statistique.type == 'Commune'?\"&#xE0C8;\":\"&#xE0C7;\"}}</i> </button> <div class=\"mdl-tooltip mdl-tooltip--large mdl-tooltip--right\" for=\"btn-pins\">Afficher les établissements</div> </div> </div>"
   );
 
 
