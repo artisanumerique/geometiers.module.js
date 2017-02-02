@@ -41,17 +41,17 @@ angular
 
         var corres = [
           {name:'nbrentr',value:'Établissements'},
-          {name:'salaries',value:'Avec des salariés'},
-          {name:'apprentis',value:'Avec des apprentis'},
-          {name:'conjoints',value:'Avec des conjoints'},
-          {name:'actifs',value:'Avec des actifs'},
-          {name:'tauxperennite',value:"Immatriculés en " + $filter('date')($filter('removeyear')(3),'yyyy')},
-          {name:'tauxstabilite',value:"Immatriculés avant " + $filter('date')($filter('removeyear')(5),'yyyy')},
-          {name:'evolcreation',value:"En activité en " + $filter('date')($filter('removeyear')(1),'yyyy')},
-          {name:'evolcreation-2',value:"En activité en " + $filter('date')($filter('removeyear')(2),'yyyy')},
-          {name:'evolcreation-3',value:"En activité en " + $filter('date')($filter('removeyear')(3),'yyyy')},
-          {name:'evolcreation-4',value:"En activité en " + $filter('date')($filter('removeyear')(4),'yyyy')},
-          {name:'evolcreation-5',value:"En activité en " + $filter('date')($filter('removeyear')(5),'yyyy')},
+          {name:'salaries',value:'Établissements avec des salariés'},
+          {name:'apprentis',value:'Établissements avec des apprentis'},
+          {name:'conjoints',value:'Établissements avec des conjoints'},
+          {name:'actifs',value:'Établissements avec des actifs'},
+          {name:'tauxperennite',value:"Établissements immatriculés en " + $filter('date')($filter('removeyear')(3),'yyyy')},
+          {name:'tauxstabilite',value:"Établissements immatriculés avant " + $filter('date')($filter('removeyear')(5),'yyyy')},
+          {name:'evolcreation',value:"Établissements en activité en " + $filter('date')($filter('removeyear')(1),'yyyy')},
+          {name:'evolcreation-2',value:"Établissements en activité en " + $filter('date')($filter('removeyear')(2),'yyyy')},
+          {name:'evolcreation-3',value:"Établissements en activité en " + $filter('date')($filter('removeyear')(3),'yyyy')},
+          {name:'evolcreation-4',value:"Établissements en activité en " + $filter('date')($filter('removeyear')(4),'yyyy')},
+          {name:'evolcreation-5',value:"Établissements en activité en " + $filter('date')($filter('removeyear')(5),'yyyy')},
         ]
 
         if(reverse){
