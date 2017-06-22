@@ -111,6 +111,7 @@ angular.module('geometiersmodulejsApp')
 	         	statistique		 : '=',
 	         	update			 : '&',
 	         	gps              : '=',
+	         	filtres          : '=',
 
 	        },
 	    	
@@ -205,20 +206,10 @@ angular.module('geometiersmodulejsApp')
                     decoupeControl			: scope.decoupe,
                     navigationControl		: scope.navigation,
                     legendeDisplay			: scope.legende,
+                    filtres                 : scope.filtres,
                     
                     // Déclencher après que le carte soit redéssinée
-        	        'initParent': function (params) {
-
-        	        	if($routeParams){
-        	        		Filtre.init($routeParams);
-        	        		element.data('geometiers').setFiltres(tools.objectToArray(Filtre.filtres));
-        	        		ctrl.dessiner(Filtre.params());
-        	        	}
-        	        	else{
-        	        		ctrl.dessiner(params);
-        	        	}
-        	        	
-        	        },
+        	        'initParent': function (params) {ctrl.dessiner(params);},
         	        // Déclencher après que le carte soit redéssinée
         	        'update': function (datas) {ctrl.creerResultat(datas);},
         	        // Déclencher après une sélection d'une zone
@@ -1023,7 +1014,7 @@ angular.module('geometiersmodulejsApp').run(['$templateCache', function($templat
 
 
   $templateCache.put('views/geometiersmodulejs.main.html',
-    "<main class=\"main-container mdl-layout__content\" ng-class=\"{'Alimentation':'blue', 'Services':'green', 'Bâtiment':'orange', 'Fabrication':'red'}[statistique.filtres.secteur]\"> <div class=\"container_preloader\" ng-show=\"loading\"><img class=\"preloader\" src=\"images/loaderco.gif\"></div> <div id=\"opaque-modal\" ng-class=\"{'visible':loading}\"></div> <div class=\"content-map\"> <leaflet-geometiers></leaflet-geometiers> </div> <div class=\"content-resultat\"> <resultat-geometiers></resultat-geometiers> </div> </main>"
+    "<main class=\"main-container mdl-layout__content share\" ng-class=\"{'Alimentation':'blue', 'Services':'green', 'Bâtiment':'orange', 'Fabrication':'red'}[statistique.filtres.secteur]\"> <div class=\"container_preloader\" ng-show=\"loading\"><img class=\"preloader\" src=\"images/loaderco.gif\"></div> <div id=\"opaque-modal\" ng-class=\"{'visible':loading}\"></div> <div class=\"content-map\"> <leaflet-geometiers></leaflet-geometiers> </div> <div class=\"content-resultat\"> <div ng-include=\"'views/geometiersmodulejs.share.html'\"></div> </div> </main>"
   );
 
 
@@ -1034,6 +1025,11 @@ angular.module('geometiersmodulejsApp').run(['$templateCache', function($templat
 
   $templateCache.put('views/geometiersmodulejs.resultat.html',
     "<div id=\"stats-resultat\" ng-show=\"!loading\"> <div id=\"titre-resultat\" class=\"mdl-cell mdl-cell--12-col\"> <h3 ng-bind=\"statistique.type\"></h3> <h1 ng-bind=\"statistique.nom\"></h1> </div> <div id=\"nbr-resultat\" class=\"mdl-cell mdl-cell--12-col\"> <span ng-show=\"statistique.resultat._valeur != null\" class=\"chiffre\" ng-bind=\"statistique.resultat._valeur\"></span> <span ng-show=\"statistique.resultat._valeur != null\" class=\"percent\" ng-bind=\"statistique.resultat._type\"></span> <span ng-show=\"statistique.resultat._valeur == null\" class=\"chiffre error\">Pas d'établissement</span> </div> <div id=\"type-resultat\" class=\"mdl-cell mdl-cell--12-col\"> <div class=\"mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select\"> <input class=\"mdl-textfield__input\" type=\"text\" id=\"typestat\" ng-model=\"statistique.resultat._nom\" value=\"Établissements\" readonly tabindex=\"-1\"> <label for=\"typestat\"> <i class=\"mdl-icon-toggle__label material-icons\">keyboard_arrow_down</i> </label> <ul for=\"typestat\" class=\"mdl-menu mdl-menu--bottom-left mdl-js-menu\"> <li class=\"mdl-menu__item mdl-menu__item--full-bleed-divider\" ng-click=\"update('nbrentr')\">Établissements</li> <li class=\"mdl-menu__item\" ng-click=\"update('salaries')\">Salariés</li> <li class=\"mdl-menu__item\" ng-click=\"update('apprentis')\">Apprentis</li> <li class=\"mdl-menu__item\" ng-click=\"update('conjoints')\">Conjoints</li> <li class=\"mdl-menu__item mdl-menu__item--full-bleed-divider\" ng-click=\"update('actifs')\">Tous les actifs</li> <li class=\"mdl-menu__item\" ng-click=\"update('agemoyen')\">Age moyen</li> <li class=\"mdl-menu__item mdl-menu__item--full-bleed-divider\" ng-click=\"update('densiteh')\">Densité artisanale</li> <li class=\"mdl-menu__item\" ng-click=\"update('tauxperennite')\">Taux de pérennité</li> <li class=\"mdl-menu__item\" ng-click=\"update('tauxstabilite')\">Taux de maturité</li> <li class=\"mdl-menu__item\" ng-click=\"update('tauxrotation')\">Taux de rotation</li> <li class=\"mdl-menu__item\" ng-click=\"update('evolcreation')\">Taux d'évolution à 1 an</li> <li class=\"mdl-menu__item\" ng-click=\"update('evolcreation-2')\">Taux d'évolution à 2 ans</li> <li class=\"mdl-menu__item\" ng-click=\"update('evolcreation-3')\">Taux d'évolution à 3 ans</li> <li class=\"mdl-menu__item\" ng-click=\"update('evolcreation-4')\">Taux d'évolution à 4 ans</li> <li class=\"mdl-menu__item\" ng-click=\"update('evolcreation-5')\">Taux d'évolution à 5 ans</li> </ul> </div> <p class=\"info\" ng-bind=\"statistique.resultat._info\"></p> </div> <ul class=\"chiffrescles mdl-list\"> <li class=\"mdl-list__item\" ng-repeat=\"chiffre in statistique.chiffres\"> <span class=\"mdl-list__item-primary-content\" ng-bind=\"chiffre._nom\"></span> <span class=\"mdl-list__item-secondary-content\" ng-bind=\"chiffre._valeur\"></span> </li> </ul> <btn-filtres></btn-filtres> <label-geometiers></label-geometiers> </div>"
+  );
+
+
+  $templateCache.put('views/geometiersmodulejs.share.html',
+    "<div id=\"stats-resultat\" ng-show=\"statistique.resultat._valeur != null\"> <div id=\"titre-resultat\" class=\"mdl-cell mdl-cell--12-col\"> <h3 ng-bind=\"statistique.type\"></h3> <h1 ng-bind=\"statistique.nom\"></h1> </div> <div id=\"nbr-resultat\" class=\"mdl-cell mdl-cell--12-col\"> <span ng-show=\"statistique.resultat._valeur != null\" class=\"chiffre\" ng-bind=\"statistique.resultat._valeur\"></span> <span ng-show=\"statistique.resultat._valeur != null\" class=\"percent\" ng-bind=\"statistique.resultat._type\"></span> <span ng-show=\"statistique.resultat._valeur == null\" class=\"chiffre error\">Pas d'établissement</span> </div> <div id=\"type-resultat\" class=\"mdl-cell mdl-cell--12-col\"> <span class=\"stats\">{{statistique.resultat._nom}}</span> <p class=\"info\" ng-bind=\"statistique.resultat._info\"></p> </div> <ul class=\"chiffrescles mdl-list\"> <li class=\"mdl-list__item\" ng-repeat=\"chiffre in statistique.chiffres\"> <span class=\"mdl-list__item-primary-content\" ng-bind=\"chiffre._nom\"></span> <span class=\"mdl-list__item-secondary-content\" ng-bind=\"chiffre._valeur\"></span> </li> </ul> </div>"
   );
 
 }]);
