@@ -25,6 +25,7 @@
     "animate.css": "^3.5.2",
     "getmdl-select": "*",
     "bootstrap": "^3.2.0",
-    "jquery-ui": "^1.12.1"
+    "jquery-ui": "^1.12.1",
+    "leaflet.geometiers.js": "*"
   }
 }
